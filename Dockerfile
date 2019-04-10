@@ -151,10 +151,7 @@ RUN chown -R ${USER}:${USER} /var/run/supervisor
 RUN chown -R ${USER}:${USER} /var/log/supervisor 
 RUN chgrp -R 0 /var/run/supervisor /var/log/supervisor 
 RUN chmod -R g=u /var/run/supervisor /var/log/supervisor
-RUN mkdir /tmp/supervisord
 
-RUN chown -R ${USER}:${USER} /tmp/supervisord
-RUN chmod -R 755 /tmp/supervisord 
 # RUN all commands below as 'django' user
 USER ${USER}
 
@@ -162,4 +159,4 @@ RUN mkdir data share media keys logs
 RUN python3 manage.py collectstatic
 
 EXPOSE 8080 8443
-ENTRYPOINT ["/usr/bin/supervisord"]
+ENTRYPOINT ["/usr/bin/supervisord", "--nodaemon", "-c", "/home/django/supervisord.conf"]
