@@ -17,5 +17,7 @@ services:
       DJANGO_MODWSGI_EXTRA_ARGS: ""
       HOME: /home/django
       MOUNT_DIR: mnt  # /home/django/mnt
+      REDIS_HOST: localhost
+      DB_HOST: localhost
     volumes:
       - /home/django/mnt

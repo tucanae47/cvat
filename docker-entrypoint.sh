@@ -7,6 +7,8 @@ if [ "$1" = "supervisord" ]; then
   : ${HOME:?"Must be defined. See README.md"}
 
   echo "Configuring ..."
+  #chown root:${USER} /dev/pts/0
+  #chown root:${USER} /dev/null
   mkdir -p \
     ${HOME}/share \
     ${HOME}/media \
