@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-echo "Entrypoint: ${1}"
+
 if [ "$1" = "supervisord" ]; then
 
   # Mandatory runtime env vars
@@ -14,9 +14,11 @@ if [ "$1" = "supervisord" ]; then
     ${HOME}/${MOUNT_DIR}/data \
     ${HOME}/${MOUNT_DIR}/keys
   touch ${HOME}/${MOUNT_DIR}/__init__.py
+  chown -R ${USER} ${HOME}/logs
+  chmod 777 ${HOME}/logs
   python3 manage.py collectstatic
 
-  echo "Running supervisord with ${USER} user ..."
+  echo "Running supervisord ..."
   exec supervisord --nodaemon -c ${HOME}/supervisord.conf
 else
   exec "$@"
