@@ -15,8 +15,7 @@ services:
         WITH_TESTS: "no"
     environment:
       DJANGO_MODWSGI_EXTRA_ARGS: ""
+      HOME: /home/django
+      MOUNT_DIR: mnt  # /home/django/mnt
     volumes:
-      - /home/django/data
-      - /home/django/keys
-      - /home/django/logs
-      - /home/django/models
+      - /home/django/mnt

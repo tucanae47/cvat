@@ -130,7 +130,7 @@ RUN if [ "$OPENVINO_TOOLKIT" = "yes" ]; then \
 # TODO: CHANGE URL
 ARG WITH_DEXTR
 ENV WITH_DEXTR=${WITH_DEXTR}
-ENV DEXTR_MODEL_DIR=${HOME}/models/dextr
+ENV DEXTR_MODEL_DIR=${HOME}/${MOUNT_DIR}/models/dextr
 RUN if [ "$WITH_DEXTR" = "yes" ]; then \
         mkdir ${DEXTR_MODEL_DIR} -p && \
         wget https://download.01.org/openvinotoolkit/models_contrib/cvat/dextr_model_v1.zip -O ${DEXTR_MODEL_DIR}/dextr.zip && \
@@ -141,7 +141,7 @@ COPY ssh ${HOME}/.ssh
 COPY cvat/ ${HOME}/cvat
 COPY tests ${HOME}/tests
 RUN patch -p1 < ${HOME}/cvat/apps/engine/static/engine/js/3rdparty.patch
-RUN chown -R ${USER}:${USER} .
+RUN chown -R ${USER}:${USER} ${HOME}
 RUN mkdir -p /var/log/supervisord
 RUN chown -R ${USER}:${USER} /var/log/supervisord
 RUN chmod -R 770 /var/log/supervisord
@@ -152,11 +152,9 @@ RUN chown -R ${USER}:${USER} /var/log/supervisor
 RUN chgrp -R 0 /var/run/supervisor /var/log/supervisor 
 RUN chmod -R g=u /var/run/supervisor /var/log/supervisor
 
-# RUN all commands below as 'django' user
-USER ${USER}
-
-RUN mkdir data share media keys logs
-RUN python3 manage.py collectstatic
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 8080 8443
-ENTRYPOINT ["/usr/bin/supervisord", "--nodaemon", "-c", "/home/django/supervisord.conf"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["supervisord"]
