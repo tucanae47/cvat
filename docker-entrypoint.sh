@@ -12,7 +12,8 @@ if [ "$1" = "supervisord" ]; then
     ${HOME}/media \
     ${HOME}/logs \
     ${HOME}/${MOUNT_DIR}/data \
-    ${HOME}/${MOUNT_DIR}/keys\
+    ${HOME}/${MOUNT_DIR}/keys
+  chown -R ${USER} ${HOME}/logs
   touch ${HOME}/${MOUNT_DIR}/__init__.py
   python3 manage.py collectstatic
 
