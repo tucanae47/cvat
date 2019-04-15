@@ -4,6 +4,7 @@ services:
   cvat:
     container_name: cvat
     image: cvat
+    tty: true
     ports:
       - "8080:8080"
     build:
@@ -18,6 +19,6 @@ services:
       HOME: /home/django
       MOUNT_DIR: mnt  # /home/django/mnt
       REDIS_HOST: localhost
-      DB_HOST: localhost
+      DB_HOST: 127.0.0.1
     volumes:
       - /home/django/mnt
