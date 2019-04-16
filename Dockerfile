@@ -142,6 +142,10 @@ COPY cvat/ ${HOME}/cvat
 COPY tests ${HOME}/tests
 RUN patch -p1 < ${HOME}/cvat/apps/engine/static/engine/js/3rdparty.patch
 RUN chown -R ${USER}:${USER} ${HOME}
+
+RUN ln -sf /dev/stdout /var/log/supervisor/access.log \
+    && ln -sf /dev/stderr /var/log/supervisor/error.log
+
 RUN mkdir -p /var/log/supervisord
 
 RUN chown -R ${USER}:${USER} /var/log/supervisord

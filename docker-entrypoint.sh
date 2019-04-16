@@ -45,7 +45,9 @@ if [ "$1" = "supervisord" ]; then
   python3 manage.py collectstatic
   mkdir -p ${USER} ${HOME}/static/CACHE
   chown -R ${USER} ${HOME}/static/CACHE
+  chown -R ${USER} ${HOME}/static
   chmod 777 ${HOME}/static/CACHE
+  chmod 777 ${HOME}/static
   echo "Running supervisord ..."
   exec supervisord --nodaemon -c ${HOME}/supervisord.conf
 else
