@@ -69,12 +69,13 @@ def DashboardView(request):
 
     task_list = list(filter(lambda task: request.user.has_perm(
         'engine.task.access', task), task_list))
-
+    #scheme = request.is_secure() and "https" or "http"
+    scheme = "https"
     return render(request, 'dashboard/dashboard.html', {
         'data': task_list,
         'max_upload_size': settings.LOCAL_LOAD_MAX_FILES_SIZE,
         'max_upload_count': settings.LOCAL_LOAD_MAX_FILES_COUNT,
-        'base_url': "{0}://{1}/".format(request.scheme, request.get_host()),
+        'base_url': "{0}://{1}/".format(scheme, request.get_host()),
         'share_path': os.getenv('CVAT_SHARE_URL', default=r'${cvat_root}/share'),
         'js_3rdparty': JS_3RDPARTY.get('dashboard', []),
         'css_3rdparty': CSS_3RDPARTY.get('dashboard', []),
