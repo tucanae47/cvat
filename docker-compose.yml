@@ -10,7 +10,8 @@ services:
     build:
       context: .
       args:
-        TF_ANNOTATION: "no"
+        TF_ANNOTATION: "yes"
+        OPENVINO_TOOLKIT: "yes"
         USER: "django"
         DJANGO_CONFIGURATION: "production"
         WITH_TESTS: "no"
