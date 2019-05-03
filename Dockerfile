@@ -44,6 +44,9 @@ RUN apt-get update && \
         p7zip-full \
 	libmysqlclient-dev \
         python-dev \
+        libsm6 \
+        libxext6 \
+        libxrender-dev \
         vim && \
     add-apt-repository --remove ppa:mc3man/gstffmpeg-keep -y && \
     add-apt-repository --remove ppa:mc3man/xerus-media -y && \
